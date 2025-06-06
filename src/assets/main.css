@@ -1,1 +1,88 @@
 @import "tailwindcss";
+
+/* 2. Variáveis dos temas Light e Dark */
+@layer base {
+  /* Definições para o tema LIGHT (padrão) */
+  :root {
+    /* Cores da Logo OnBoard */
+    --onboard-green: 140 75% 44%; /* Verde vibrante e energético */
+    --onboard-dark-blue: 224 71% 4%; /* Azul bem escuro, quase preto */
+
+    /* Cores do Tema */
+    --background: 0 0% 100%; /* Branco */
+    --foreground: var(--onboard-dark-blue); /* Texto principal */
+    
+    --card: 0 0% 100%;
+    --card-foreground: var(--onboard-dark-blue);
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--onboard-dark-blue);
+    
+    --primary: var(--onboard-green);
+    --primary-foreground: 0 0% 98%; /* Texto sobre a cor primária */
+    
+    --secondary: 240 5% 96%; /* Cinza claro para fundos secundários */
+    --secondary-foreground: 240 5% 10%;
+    
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%; /* Texto com menos destaque */
+
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 5% 10%;
+    
+    --destructive: 0 84% 60%; /* Vermelho para alertas de erro */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: var(--onboard-green); /* Foco em inputs */
+
+    --radius: 0.75rem; /* Raio da borda para um visual moderno */
+  }
+
+  /* Definições para o tema DARK */
+  .dark {
+    /* Cores da Logo OnBoard (mantém as mesmas) */
+    --onboard-green: 140 75% 44%;
+    --onboard-dark-blue: 224 71% 4%;
+
+    /* Cores do Tema Dark */
+    --background: 240 10% 3.9%; /* Fundo escuro suave */
+    --foreground: 0 0% 98%; /* Texto claro */
+    
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: var(--onboard-green);
+    --primary-foreground: 240 5% 10%; /* Texto escuro sobre a cor primária */
+    
+    --secondary: 240 3.7% 15.9%; /* Cinza escuro para fundos secundários */
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%; /* Texto com menos destaque no dark */
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 84% 60%; /* Vermelho mantém a mesma intensidade */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: var(--onboard-green); /* Foco em inputs */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}

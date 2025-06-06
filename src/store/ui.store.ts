@@ -13,8 +13,33 @@ export const useUIStore = defineStore('ui', () => {
   // Actions
   function setTheme(theme: Theme) {
     currentTheme.value = theme;
-    // A lógica para aplicar o tema ao DOM (ex: atualizar classe no <html>)
-    // será implementada no capítulo de UI/UX.
+    
+    // Aplica o tema ao DOM
+    const htmlElement = document.documentElement;
+    
+    if (theme === 'dark') {
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+    }
+    
+    // Salva a preferência no localStorage
+    localStorage.setItem('theme', theme);
+  }
+
+  // Função para inicializar o tema baseado na preferência salva ou sistema
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    setTheme(themeToApply);
+  }
+
+  // Função para alternar entre os temas
+  function toggleTheme() {
+    const newTheme = currentTheme.value === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
   }
 
   function setLoading(status: boolean) {
@@ -32,6 +57,8 @@ export const useUIStore = defineStore('ui', () => {
     isLoading,
     backendThemeColors,
     setTheme,
+    initializeTheme,
+    toggleTheme,
     setLoading,
     setBackendThemeColors,
   };
