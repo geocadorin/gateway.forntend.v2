@@ -1,0 +1,68 @@
+{
+  "common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "documentation": "documentation"
+  },
+  "home_page": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}!",
+    "user_stats": {
+      "messages": "You have {count, plural, =0 {no new messages} =1 {one new message} other {# new messages}}.",
+      "files": "You have {n} file | You have {n} files",
+      "last_login": "Your last login was at {0} on {1}."
+    },
+    "notifications": {
+      "new_friend_request": "You have a new friend request from {user}.",
+      "view_all": "View all notifications"
+    },
+    "actions": {
+      "text": "From here, you can manage your account or read the @:common.documentation.",
+      "profile_button": "Manage Profile"
+    },
+    "footer": {
+      "terms": "By using our service, you agree to the {terms_link}."
+    }
+  },
+  "errors": {
+    "not_found": "Page not found.",
+    "server_error": "An error occurred on the server (status: {status})."
+  },
+  "showcase": {
+    "title": "i18n Showcase",
+    "subtitle": "An interactive playground to explore advanced features.",
+    "pluralization": {
+      "title": "Pluralization",
+      "simple_label": "Drag to change the number of files",
+      "simple_files": "You have {n} file | You have {n} files",
+      "advanced_label": "Drag to change the number of messages",
+      "advanced_messages": "No new messages. Phew! | One single message is waiting for you. | There are {count} messages in your inbox."
+    },
+    "interpolation": {
+      "title": "Interpolation, Links & HTML",
+      "named_label": "Named Interpolation",
+      "named_placeholder": "Enter a name",
+      "hello": "Hello, {name}! Welcome to our app.",
+      "linked_html_label": "Message with a Link (HTML)",
+      "terms_html": "To continue, you must accept our {link}.",
+      "terms_link_text": "Terms and Conditions"
+    },
+    "formatting": {
+      "title": "Date & Number Formatting",
+      "datetime_label": "Locale-Aware Dates",
+      "short_date": "Short Format",
+      "long_date": "Long Format",
+      "number_label": "Formatted Numbers",
+      "currency_brl": "Price (BRL)",
+      "currency_usd": "Price (USD)",
+      "percent": "Discount",
+      "numeric_date_label": "Numeric Date Format",
+      "numeric_date": "Numeric Date"
+    },
+    "navigation": {
+      "themes": "Themes & UI",
+      "i18n": "Internationalization"
+    }
+  }
+}

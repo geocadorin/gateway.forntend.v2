@@ -1,7 +1,7 @@
 <template>
-  <ThemeShowcase />
+  <AppShowcaseNavigator />
 </template>
 
 <script setup lang="ts">
-import ThemeShowcase from '@/components/ThemeShowcase.vue';
+import AppShowcaseNavigator from '@/components/showcases/AppShowcaseNavigator.vue';
 </script>

@@ -1,0 +1,68 @@
+{
+  "common": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "loading": "Carregando...",
+    "documentation": "documentação"
+  },
+  "home_page": {
+    "title": "Painel de Controle",
+    "welcome": "Bem-vindo(a) de volta, {name}!",
+    "user_stats": {
+      "messages": "Você tem {count, plural, =0 {nenhuma nova mensagem} =1 {uma nova mensagem} other {# novas mensagens}}.",
+      "files": "Você tem {n} arquivo | Você tem {n} arquivos",
+      "last_login": "Seu último login foi às {0} de {1}."
+    },
+    "notifications": {
+      "new_friend_request": "Você tem uma nova solicitação de amizade de {user}.",
+      "view_all": "Ver todas as notificações"
+    },
+    "actions": {
+      "text": "A partir daqui, você pode gerenciar sua conta ou ler a @:common.documentation.",
+      "profile_button": "Gerenciar Perfil"
+    },
+    "footer": {
+      "terms": "Ao utilizar nosso serviço, você concorda com os {terms_link}."
+    }
+  },
+  "errors": {
+    "not_found": "Página não encontrada.",
+    "server_error": "Ocorreu um erro no servidor (status: {status})."
+  },
+  "showcase": {
+    "title": "Potencial do i18n",
+    "subtitle": "Um playground interativo para explorar os recursos avançados.",
+    "pluralization": {
+      "title": "Pluralização",
+      "simple_label": "Arraste para mudar o número de arquivos",
+      "simple_files": "Você tem {n} arquivo | Você tem {n} arquivos",
+      "advanced_label": "Arraste para mudar o número de mensagens",
+      "advanced_messages": "Nenhuma mensagem nova. Ufa! | Uma única mensagem esperando por você. | Existem {count} mensagens na sua caixa de entrada."
+    },
+    "interpolation": {
+      "title": "Interpolação, Links e HTML",
+      "named_label": "Interpolação com Variável",
+      "named_placeholder": "Digite um nome",
+      "hello": "Olá, {name}! Bem-vindo(a) ao nosso app.",
+      "linked_html_label": "Mensagem com Link (HTML)",
+      "terms_html": "Para continuar, você deve aceitar nossos {link}.",
+      "terms_link_text": "Termos e Condições"
+    },
+    "formatting": {
+      "title": "Formatação de Datas e Números",
+      "datetime_label": "Datas Formatadas para o Idioma",
+      "short_date": "Formato Curto",
+      "long_date": "Formato Longo",
+      "number_label": "Números Formatados",
+      "currency_brl": "Preço (BRL)",
+      "currency_usd": "Preço (USD)",
+      "percent": "Desconto",
+      "numeric_date_label": "Data no Formato Numérico",
+      "numeric_date": "Data Numérica"
+    },
+    "navigation": {
+      "themes": "Temas & UI",
+      "i18n": "Internacionalização"
+    }
+  }
+}
