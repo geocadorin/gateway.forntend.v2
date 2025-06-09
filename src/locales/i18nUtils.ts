@@ -49,6 +49,8 @@ function getInitialLocale(): string {
         return browserLocale;
     }
 
+    // Set 'pt' as the default language if nothing is saved
+    localStorage.setItem('user-locale', 'pt');
     return 'pt'; // Fallback para português
 }
 

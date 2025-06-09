@@ -15,7 +15,7 @@ export function useTheme() {
     // explicitamente entre as classes 'light' e 'dark',
     // em vez de apenas adicionar/remover 'dark'.
     storageKey: 'vueuse-theme', // Chave para localStorage (default: 'vueuse-color-scheme')
-    onChanged: (dark: boolean, defaultHandler, mode) => { // Callback quando o tema muda [13]
+    onChanged: (dark: boolean) => { // Callback quando o tema muda [13]
       uiStore.setTheme(dark ? 'dark' : 'light');
       // defaultHandler(mode); // Chama o manipulador padrão do useDark se necessário
       // Atualiza a classe no HTML explicitamente se valueLight/valueDark não for suficiente

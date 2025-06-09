@@ -34,6 +34,16 @@
     --onboard-green: 140 75% 44%; /* Verde vibrante e energético */
     --onboard-dark-blue: 224 71% 4%; /* Azul bem escuro, quase preto */
 
+    /* Sidebar custom variables */
+    --sidebar-primary: hsl(142, 76%, 36%);
+    --sidebar-primary-hover: hsl(142, 76%, 95%);
+    --sidebar-primary-selected: hsl(142, 76%, 36%);
+    --sidebar-text-muted: hsl(215, 20%, 65%);
+    --sidebar-text-selected: hsl(0, 0%, 100%);
+    --sidebar-background: hsl(0, 0%, 100%);
+    --sidebar-border: hsl(214, 32%, 91%);
+    --sidebar-item-hover: hsl(142, 76%, 97%);
+
     /* Cores do Tema */
     --background: 0 0% 100%; /* Branco */
     --foreground: 224 71% 4%; /* Texto principal */
@@ -71,6 +81,16 @@
     /* Cores da Logo OnBoard (mantém as mesmas) */
     --onboard-green: 140 75% 44%;
     --onboard-dark-blue: 224 71% 4%;
+
+    /* Dark mode sidebar variables */
+    --sidebar-primary: hsl(142, 76%, 36%);
+    --sidebar-primary-hover: hsl(142, 76%, 15%);
+    --sidebar-primary-selected: hsl(142, 76%, 36%);
+    --sidebar-text-muted: hsl(215, 20%, 65%);
+    --sidebar-text-selected: hsl(0, 0%, 100%);
+    --sidebar-background: hsl(222, 84%, 5%);
+    --sidebar-border: hsl(217, 32%, 17%);
+    --sidebar-item-hover: hsl(142, 76%, 8%);
 
     /* Cores do Tema Dark */
     --background: 240 10% 3.9%; /* Fundo escuro suave */

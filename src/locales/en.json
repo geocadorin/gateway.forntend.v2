@@ -64,6 +64,7 @@
       "themes": "Themes & UI",
       "i18n": "Internationalization"
     },
+    
     "measurements": {
       "title": "Custom Measurements",
       "description": "Demonstrating custom measurement functions with automatic unit conversion based on locale",
@@ -81,6 +82,125 @@
       "conversions_title": "Automatic Conversions:",
       "english_conversions": "English: Converts to feet, pounds, gallons, Fahrenheit, and PSI",
       "metric_conversions": "Portuguese/Spanish: Shows metric units (meters, kg, liters, Celsius, kPa)"
+    }
+  },
+  "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Access your fleet's telemetry",
+      "usernameLabel": "Username or Email",
+      "usernamePlaceholder": "your.username",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Forgot your password?",
+      "button": "Sign In",
+      "loadingButton": "Signing In...",
+      "error": "An unexpected error occurred. Please try again.",
+      "securityNote": "Protected by end-to-end encryption"
+  },
+  "layout": {
+    "sidebar": {
+      "close": "Close menu",
+      "expand": "Expand menu",
+      "collapse": "Collapse menu",
+      "sections": {
+        "dashboard": "Dashboard",
+        "monitoring": "Monitoring",
+        "settings": "Settings",
+        "showcase": "Showcase"
+      },
+      "menu": {
+        "dashboard": "Dashboard",
+        "analytics": "Analytics",
+        "telemetry": {
+          "title": "Telemetry",
+          "realTime": "Real Time",
+          "history": "History"
+        },
+        "alerts": {
+          "title": "Alerts",
+          "active": "Active",
+          "history": "History"
+        },
+        "settings": "Settings",
+        "users": "Users",
+        "showcase": "Showcase"
+      }
+    },
+    "topbar": {
+      "toggleMenu": "Toggle menu",
+      "language": {
+        "toggle": "Change language",
+        "selectLanguage": "Select language",
+        "changed": "Language changed successfully"
+      },
+      "theme": {
+        "toggle": "Toggle theme",
+        "darkEnabled": "Dark mode enabled",
+        "lightEnabled": "Light mode enabled"
+      },
+      "notifications": {
+        "toggle": "Notifications",
+        "title": "Notifications",
+        "unread": "unread",
+        "markAllRead": "Mark all as read",
+        "markAsRead": "Mark as read",
+        "delete": "Delete",
+        "clearAll": "Clear all",
+        "viewAll": "View all notifications",
+        "empty": "No notifications",
+        "markedAsRead": "Notification marked as read",
+        "allMarkedAsRead": "{count} notifications marked as read",
+        "deleted": "Notification deleted",
+        "allCleared": "{count} notifications cleared",
+        "time": {
+          "now": "now",
+          "minutes": "{count} min ago",
+          "hours": "{count}h ago",
+          "days": "{count}d ago"
+        }
+      },
+      "user": {
+        "menu": "User menu",
+        "profile": "Profile",
+        "changePassword": "Change password",
+        "changePasswordModal": "Change password functionality in development",
+        "settings": "Settings",
+        "confirmLogout": "Are you sure you want to logout?",
+        "logout": "Logout",
+        "loggedOut": "Logout successful"
+      }
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "analytics": "Analytics",
+      "telemetry": "Telemetry",
+      "alerts": "Alerts",
+      "settings": "Settings",
+      "users": "Users",
+      "showcase": "Showcase"
+    }
+  },
+  "dashboard": {
+    "subtitle": "Overview of your fleet and telemetry system",
+    "actions": {
+      "newItem": "New Item"
+    },
+    "stats": {
+      "totalDevices": "Total Devices",
+      "activeAlerts": "Active Alerts",
+      "dataTransmitted": "Data Transmitted",
+      "uptime": "Uptime",
+      "fromLastMonth": "from last month",
+      "fromLastWeek": "from last week",
+      "newToday": "new today",
+      "excellent": "Excellent"
+    },
+    "charts": {
+      "telemetryOverview": "Telemetry Overview",
+      "recentAlerts": "Recent Alerts",
+      "deviceStatus": "Device Status",
+      "performanceMetrics": "Performance Metrics"
     }
   }
 }

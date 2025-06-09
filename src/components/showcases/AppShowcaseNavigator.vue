@@ -13,6 +13,9 @@
                             ]">
                             {{ t(showcase.labelKey) }}
                         </button>
+                        <button @click="logout" class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-ring text-muted-foreground hover:bg-muted hover:text-foreground">
+                            Logout
+                        </button>
                     </div>
                 </div>
             </nav>
@@ -32,16 +35,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, shallowRef } from 'vue';
-
-// Importe todos os seus componentes de showcase
-import ThemeShowcase from '@/components/showcases/ThemeShowCase.vue';
-import I18nPotentialShowcase from '@/components/showcases/I18nPotentialShowcase.vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useAuthStore } from '../../store/auth.store';
+import { useRouter } from 'vue-router';
+import ThemeShowcase from './ThemeShowCase.vue';
+import I18nPotentialShowcase from './I18nPotentialShowcase.vue';
 
 const { t } = useI18n();
 
-
+const authStore = useAuthStore();
+const router = useRouter();
 
 // 3. A "Fonte da Verdade": uma lista dos showcases disponíveis
 // Para adicionar um novo, basta adicioná-lo a esta lista!
@@ -66,7 +70,10 @@ const showcases = [
 // 4. Estado para controlar qual aba/componente está ativo
 const activeShowcaseId = ref(showcases[0].id); // Começa com o primeiro da lista
 
-// Não precisamos mais do activeComponent já que usamos v-show
+function logout() {
+    authStore.logout();
+    router.push('/login');
+}
 </script>
 
 <style>

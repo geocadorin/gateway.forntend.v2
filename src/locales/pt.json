@@ -64,6 +64,7 @@
       "themes": "Temas & UI",
       "i18n": "Internacionalização"
     },
+    
     "measurements": {
       "title": "Medidas Personalizadas",
       "description": "Demonstrando funções de medidas personalizadas com conversão automática de unidades baseada no idioma",
@@ -81,6 +82,133 @@
       "conversions_title": "Conversões Automáticas:",
       "english_conversions": "Inglês: Converte para pés, libras, galões, Fahrenheit e PSI",
       "metric_conversions": "Português/Espanhol: Mostra unidades métricas (metros, kg, litros, Celsius, kPa)"
+    }
+  },
+  "login": {
+      "title": "Acesse sua conta",
+      "subtitle": "Acesse a telemetria da sua frota",
+      "usernameLabel": "E-mail",
+      "usernamePlaceholder": "seu-email@exemplo.com",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Esqueceu sua senha?",
+      "button": "Entrar",
+      "loadingButton": "Entrando...",
+      "error": "Ocorreu um erro inesperado. Tente novamente.",
+      "securityNote": "Protegido por criptografia de ponta a ponta"
+  },
+  "layout": {
+    "sidebar": {
+      "close": "Fechar menu",
+      "expand": "Expandir menu",
+      "collapse": "Recolher menu",
+      "sections": {
+        "dashboard": "Painel",
+        "monitoring": "Monitoramento",
+        "settings": "Configurações",
+        "showcase": "Demonstração"
+      },
+      "menu": {
+        "dashboard": "Dashboard",
+        "analytics": "Análises",
+        "telemetry": {
+          "title": "Telemetria",
+          "realTime": "Tempo Real",
+          "history": "Histórico"
+        },
+        "alerts": {
+          "title": "Alertas",
+          "active": "Ativos",
+          "history": "Histórico"
+        },
+        "settings": "Configurações",
+        "users": "Usuários",
+        "showcase": "Showcase"
+      }
+    },
+    "topbar": {
+      "toggleMenu": "Alternar menu",
+      "language": {
+        "toggle": "Alterar idioma",
+        "selectLanguage": "Selecionar idioma",
+        "changed": "Idioma alterado com sucesso"
+      },
+      "theme": {
+        "toggle": "Alternar tema",
+        "darkEnabled": "Modo escuro ativado",
+        "lightEnabled": "Modo claro ativado"
+      },
+      "notifications": {
+        "toggle": "Notificações",
+        "title": "Notificações",
+        "unread": "não lidas",
+        "markAllRead": "Marcar todas como lidas",
+        "markAsRead": "Marcar como lida",
+        "delete": "Excluir",
+        "clearAll": "Limpar todas",
+        "viewAll": "Ver todas as notificações",
+        "empty": "Nenhuma notificação",
+        "markedAsRead": "Notificação marcada como lida",
+        "allMarkedAsRead": "{count} notificações marcadas como lidas",
+        "deleted": "Notificação excluída",
+        "allCleared": "{count} notificações removidas",
+        "time": {
+          "now": "agora",
+          "minutes": "{count} min atrás",
+          "hours": "{count}h atrás",
+          "days": "{count}d atrás"
+        }
+      },
+      "user": {
+        "menu": "Menu do usuário",
+        "profile": "Perfil",
+        "changePassword": "Alterar senha",
+        "changePasswordModal": "Funcionalidade de alteração de senha em desenvolvimento",
+        "settings": "Configurações",
+        "confirmLogout": "Tem certeza que deseja sair?",
+        "logout": "Sair",
+        "loggedOut": "Logout realizado com sucesso"
+      }
+    },
+    "breadcrumb": {
+      "home": "Início",
+      "dashboard": "Dashboard",
+      "analytics": "Análises",
+      "telemetry": "Telemetria",
+      "alerts": "Alertas",
+      "settings": "Configurações",
+      "users": "Usuários",
+      "showcase": "Showcase"
+    }
+  },
+  "dashboard": {
+    "subtitle": "Visão geral da sua frota e sistema de telemetria",
+    "actions": {
+      "newItem": "Novo Item"
+    },
+    "stats": {
+      "totalDevices": "Total de Dispositivos",
+      "activeAlerts": "Alertas Ativos",
+      "dataTransmitted": "Dados Transmitidos",
+      "uptime": "Tempo de Atividade",
+      "fromLastMonth": "do mês passado",
+      "fromLastWeek": "da semana passada",
+      "newToday": "novos hoje",
+      "excellent": "Excelente"
+    },
+    "charts": {
+      "telemetryOverview": "Visão Geral da Telemetria",
+      "last7days": "Últimos 7 dias",
+      "last30days": "Últimos 30 dias",
+      "placeholder": "Gráfico será renderizado aqui"
+    },
+    "recentActivity": {
+      "title": "Atividade Recente",
+      "deviceConnected": "Dispositivo conectado",
+      "alertTriggered": "Alerta disparado",
+      "dataSync": "Sincronização de dados",
+      "maintenanceCompleted": "Manutenção concluída",
+      "timeAgo": "há {time}"
     }
   }
 }

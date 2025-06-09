@@ -64,6 +64,7 @@
       "themes": "Temas & UI",
       "i18n": "Internacionalización"
     },
+    
     "measurements": {
       "title": "Medidas Personalizadas",
       "description": "Demostrando funciones de medida personalizadas con conversión automática de unidades según el idioma",
@@ -81,6 +82,125 @@
       "conversions_title": "Conversiones Automáticas:",
       "english_conversions": "Inglés: Convierte a pies, libras, galones, Fahrenheit y PSI",
       "metric_conversions": "Portugués/Español: Muestra unidades métricas (metros, kg, litros, Celsius, kPa)"
+    }
+  },
+  "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "subtitle": "Accede a la telemetría de tu flota",
+      "usernameLabel": "Usuario o E-mail",
+      "usernamePlaceholder": "tu.usuario",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "button": "Iniciar Sesión",
+      "loadingButton": "Iniciando sesión...",
+      "error": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+      "securityNote": "Protegido por cifrado de extremo a extremo"
+  },
+  "layout": {
+    "sidebar": {
+      "close": "Cerrar menú",
+      "expand": "Expandir menú",
+      "collapse": "Contraer menú",
+      "sections": {
+        "dashboard": "Panel",
+        "monitoring": "Monitoreo",
+        "settings": "Configuración",
+        "showcase": "Demostración"
+      },
+      "menu": {
+        "dashboard": "Dashboard",
+        "analytics": "Análisis",
+        "telemetry": {
+          "title": "Telemetría",
+          "realTime": "Tiempo Real",
+          "history": "Historial"
+        },
+        "alerts": {
+          "title": "Alertas",
+          "active": "Activas",
+          "history": "Historial"
+        },
+        "settings": "Configuración",
+        "users": "Usuarios",
+        "showcase": "Showcase"
+      }
+    },
+    "topbar": {
+      "toggleMenu": "Alternar menú",
+      "language": {
+        "toggle": "Cambiar idioma",
+        "selectLanguage": "Seleccionar idioma",
+        "changed": "Idioma cambiado exitosamente"
+      },
+      "theme": {
+        "toggle": "Alternar tema",
+        "darkEnabled": "Modo oscuro activado",
+        "lightEnabled": "Modo claro activado"
+      },
+      "notifications": {
+        "toggle": "Notificaciones",
+        "title": "Notificaciones",
+        "unread": "no leídas",
+        "markAllRead": "Marcar todas como leídas",
+        "markAsRead": "Marcar como leída",
+        "delete": "Eliminar",
+        "clearAll": "Limpiar todas",
+        "viewAll": "Ver todas las notificaciones",
+        "empty": "Sin notificaciones",
+        "markedAsRead": "Notificación marcada como leída",
+        "allMarkedAsRead": "{count} notificaciones marcadas como leídas",
+        "deleted": "Notificación eliminada",
+        "allCleared": "{count} notificaciones eliminadas",
+        "time": {
+          "now": "ahora",
+          "minutes": "hace {count} min",
+          "hours": "hace {count}h",
+          "days": "hace {count}d"
+        }
+      },
+      "user": {
+        "menu": "Menú de usuario",
+        "profile": "Perfil",
+        "changePassword": "Cambiar contraseña",
+        "changePasswordModal": "Funcionalidad de cambio de contraseña en desarrollo",
+        "settings": "Configuración",
+        "confirmLogout": "¿Estás seguro de que quieres cerrar sesión?",
+        "logout": "Cerrar sesión",
+        "loggedOut": "Sesión cerrada exitosamente"
+      }
+    },
+    "breadcrumb": {
+      "home": "Inicio",
+      "dashboard": "Dashboard",
+      "analytics": "Análisis",
+      "telemetry": "Telemetría",
+      "alerts": "Alertas",
+      "settings": "Configuración",
+      "users": "Usuarios",
+      "showcase": "Showcase"
+    }
+  },
+  "dashboard": {
+    "subtitle": "Visión general de tu flota y sistema de telemetría",
+    "actions": {
+      "newItem": "Nuevo Elemento"
+    },
+    "stats": {
+      "totalDevices": "Total de Dispositivos",
+      "activeAlerts": "Alertas Activas",
+      "dataTransmitted": "Datos Transmitidos",
+      "uptime": "Tiempo de Actividad",
+      "fromLastMonth": "del mes pasado",
+      "fromLastWeek": "de la semana pasada",
+      "newToday": "nuevos hoy",
+      "excellent": "Excelente"
+    },
+    "charts": {
+      "telemetryOverview": "Visión General de Telemetría",
+      "recentAlerts": "Alertas Recientes",
+      "deviceStatus": "Estado de Dispositivos",
+      "performanceMetrics": "Métricas de Rendimiento"
     }
   }
 }

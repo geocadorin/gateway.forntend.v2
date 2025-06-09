@@ -1,7 +1,8 @@
 <template>
-  <AppShowcaseNavigator />
+  <router-view />
 </template>
 
 <script setup lang="ts">
-import AppShowcaseNavigator from '@/components/showcases/AppShowcaseNavigator.vue';
+// App.vue agora usa o sistema de roteamento
+// O conteúdo será renderizado baseado nas rotas definidas em src/router/
 </script>
