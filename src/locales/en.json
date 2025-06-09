@@ -63,6 +63,24 @@
     "navigation": {
       "themes": "Themes & UI",
       "i18n": "Internationalization"
+    },
+    "measurements": {
+      "title": "Custom Measurements",
+      "description": "Demonstrating custom measurement functions with automatic unit conversion based on locale",
+      "length_title": "Length",
+      "mass_title": "Mass",
+      "volume_title": "Volume",
+      "temperature_title": "Temperature",
+      "pressure_title": "Pressure",
+      "value_label": "Value",
+      "meters_unit": "meters",
+      "kg_unit": "kilograms",
+      "liters_unit": "liters",
+      "celsius_unit": "Celsius",
+      "kpa_unit": "kPa",
+      "conversions_title": "Automatic Conversions:",
+      "english_conversions": "English: Converts to feet, pounds, gallons, Fahrenheit, and PSI",
+      "metric_conversions": "Portuguese/Spanish: Shows metric units (meters, kg, liters, Celsius, kPa)"
     }
   }
 }

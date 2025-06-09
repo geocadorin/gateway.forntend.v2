@@ -102,6 +102,109 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Nova seção para Measurements -->
+            <div class="bg-card border-border border rounded-lg p-6 space-y-6">
+                <h2 class="text-2xl font-semibold text-card-foreground">{{ t('showcase.measurements.title') }}</h2>
+                <p class="text-muted-foreground">{{ t('showcase.measurements.description') }}</p>
+
+                <!-- Comprimento / Length -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-medium text-card-foreground">{{ t('showcase.measurements.length_title') }}
+                    </h3>
+                    <div class="flex items-center space-x-4">
+                        <label class="font-medium min-w-0 flex-shrink-0">{{ t('showcase.measurements.value_label')
+                            }}:</label>
+                        <input type="number" v-model.number="measurements.length" step="0.1"
+                            class="flex-1 max-w-32 bg-background border-border border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring">
+                        <span class="text-sm text-muted-foreground">{{ t('showcase.measurements.meters_unit') }}</span>
+                    </div>
+                    <div class="bg-accent text-accent-foreground p-3 rounded-md">
+                        <span class="font-mono text-lg">{{ t('measurements.length', { value: measurements.length })
+                            }}</span>
+                    </div>
+                </div>
+
+                <!-- Massa / Mass -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-medium text-card-foreground">{{ t('showcase.measurements.mass_title') }}
+                    </h3>
+                    <div class="flex items-center space-x-4">
+                        <label class="font-medium min-w-0 flex-shrink-0">{{ t('showcase.measurements.value_label')
+                            }}:</label>
+                        <input type="number" v-model.number="measurements.mass" step="0.1"
+                            class="flex-1 max-w-32 bg-background border-border border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring">
+                        <span class="text-sm text-muted-foreground">{{ t('showcase.measurements.kg_unit') }}</span>
+                    </div>
+                    <div class="bg-accent text-accent-foreground p-3 rounded-md">
+                        <span class="font-mono text-lg">{{ t('measurements.mass', { value: measurements.mass })
+                            }}</span>
+                    </div>
+                </div>
+
+                <!-- Volume -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-medium text-card-foreground">{{ t('showcase.measurements.volume_title') }}
+                    </h3>
+                    <div class="flex items-center space-x-4">
+                        <label class="font-medium min-w-0 flex-shrink-0">{{ t('showcase.measurements.value_label')
+                            }}:</label>
+                        <input type="number" v-model.number="measurements.volume" step="0.1"
+                            class="flex-1 max-w-32 bg-background border-border border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring">
+                        <span class="text-sm text-muted-foreground">{{ t('showcase.measurements.liters_unit') }}</span>
+                    </div>
+                    <div class="bg-accent text-accent-foreground p-3 rounded-md">
+                        <span class="font-mono text-lg">{{ t('measurements.volume', { value: measurements.volume })
+                            }}</span>
+                    </div>
+                </div>
+
+                <!-- Temperatura / Temperature -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-medium text-card-foreground">{{ t('showcase.measurements.temperature_title')
+                        }}</h3>
+                    <div class="flex items-center space-x-4">
+                        <label class="font-medium min-w-0 flex-shrink-0">{{ t('showcase.measurements.value_label')
+                            }}:</label>
+                        <input type="number" v-model.number="measurements.temperature" step="0.1"
+                            class="flex-1 max-w-32 bg-background border-border border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring">
+                        <span class="text-sm text-muted-foreground">{{ t('showcase.measurements.celsius_unit') }}</span>
+                    </div>
+                    <div class="bg-accent text-accent-foreground p-3 rounded-md">
+                        <span class="font-mono text-lg">{{ t('measurements.temperature', {
+                            value:
+                            measurements.temperature })
+                            }}</span>
+                    </div>
+                </div>
+
+                <!-- Pressão / Pressure -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-medium text-card-foreground">{{ t('showcase.measurements.pressure_title') }}
+                    </h3>
+                    <div class="flex items-center space-x-4">
+                        <label class="font-medium min-w-0 flex-shrink-0">{{ t('showcase.measurements.value_label')
+                            }}:</label>
+                        <input type="number" v-model.number="measurements.pressure" step="0.1"
+                            class="flex-1 max-w-32 bg-background border-border border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring">
+                        <span class="text-sm text-muted-foreground">{{ t('showcase.measurements.kpa_unit') }}</span>
+                    </div>
+                    <div class="bg-accent text-accent-foreground p-3 rounded-md">
+                        <span class="font-mono text-lg">{{ t('measurements.pressure', { value: measurements.pressure })
+                            }}</span>
+                    </div>
+                </div>
+
+                <!-- Explicação das conversões -->
+                <div class="mt-6 p-4 bg-muted rounded-lg">
+                    <h4 class="font-semibold mb-2">{{ t('showcase.measurements.conversions_title') }}</h4>
+                    <ul class="text-sm text-muted-foreground space-y-1">
+                        <li>{{ t('showcase.measurements.english_conversions') }}</li>
+                        <li>{{ t('showcase.measurements.metric_conversions') }}</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -123,4 +226,13 @@ const messageCount = ref(0);
 const userName = ref('Alex');
 const price = ref(12345.67);
 const now = ref(new Date());
+
+// Estado reativo para as medidas
+const measurements = ref({
+    length: 10,
+    mass: 75,
+    volume: 2.5,
+    temperature: 25,
+    pressure: 101.3
+});
 </script>
