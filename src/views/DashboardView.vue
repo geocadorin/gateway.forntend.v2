@@ -6,7 +6,7 @@
         <h1 class="text-3xl font-bold text-foreground">{{ $t('layout.breadcrumb.dashboard') }}</h1>
         <p class="text-muted-foreground mt-1">{{ $t('dashboard.subtitle') }}</p>
       </div>
-      <div class="flex items-center gap-2">
+              <div class="flex items-center space-x-2">
         <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
           <Icon icon="mdi:plus" class="mr-2 h-4 w-4" />
           {{ $t('dashboard.actions.newItem') }}

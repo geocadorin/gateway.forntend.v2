@@ -24,6 +24,32 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+
+  /* Adicionando shades de primary para uso direto no Tailwind */
+  --color-primary-50: hsl(var(--primary-50));
+  --color-primary-100: hsl(var(--primary-100));
+  --color-primary-200: hsl(var(--primary-200));
+  --color-primary-300: hsl(var(--primary-300));
+  --color-primary-400: hsl(var(--primary-400));
+  --color-primary-500: hsl(var(--primary-500));
+  --color-primary-600: hsl(var(--primary-600));
+  --color-primary-700: hsl(var(--primary-700));
+  --color-primary-800: hsl(var(--primary-800));
+  --color-primary-900: hsl(var(--primary-900));
+
+  /* Adicionando cores semânticas para uso direto no Tailwind */
+  --color-success-50: hsl(var(--success-50));
+  --color-success-500: hsl(var(--success-500));
+  --color-success-600: hsl(var(--success-600));
+  --color-warning-50: hsl(var(--warning-50));
+  --color-warning-500: hsl(var(--warning-500));
+  --color-warning-600: hsl(var(--warning-600));
+  --color-error-50: hsl(var(--error-50));
+  --color-error-500: hsl(var(--error-500));
+  --color-error-600: hsl(var(--error-600));
+  --color-info-50: hsl(var(--info-50));
+  --color-info-500: hsl(var(--info-500));
+  --color-info-600: hsl(var(--info-600));
 }
 
 /* 3. Adiciona suas variáveis e estilos de base personalizados */
@@ -38,6 +64,7 @@
     --sidebar-primary: hsl(142, 76%, 36%);
     --sidebar-primary-hover: hsl(142, 76%, 95%);
     --sidebar-primary-selected: hsl(142, 76%, 36%);
+    --sidebar-text: hsl(224, 71%, 4%); /* Adicionado: Cor do texto geral da sidebar */
     --sidebar-text-muted: hsl(215, 20%, 65%);
     --sidebar-text-selected: hsl(0, 0%, 100%);
     --sidebar-background: hsl(0, 0%, 100%);
@@ -74,6 +101,35 @@
     --ring: 140 75% 44%; /* Foco em inputs */
 
     --radius: 0.75rem; /* Raio da borda para um visual moderno */
+
+    /* Shades de Primary */
+    --primary-50: 140 75% 95%;
+    --primary-100: 140 75% 90%;
+    --primary-200: 140 75% 80%;
+    --primary-300: 140 75% 70%;
+    --primary-400: 140 75% 60%;
+    --primary-500: 140 75% 44%; /* Cor primária principal */
+    --primary-600: 140 75% 34%;
+    --primary-700: 140 75% 24%;
+    --primary-800: 140 75% 14%;
+    --primary-900: 140 75% 8%;
+
+    /* Cores Semânticas */
+    --success-50: 120 100% 97%;
+    --success-500: 120 100% 35%;
+    --success-600: 120 100% 25%;
+    
+    --warning-50: 40 100% 97%;
+    --warning-500: 40 100% 50%;
+    --warning-600: 40 100% 40%;
+    
+    --error-50: 0 100% 97%;
+    --error-500: 0 100% 50%;
+    --error-600: 0 100% 40%;
+    
+    --info-50: 220 100% 97%;
+    --info-500: 220 100% 50%;
+    --info-600: 220 100% 40%;
   }
 
   /* Definições para o tema DARK */
@@ -86,6 +142,7 @@
     --sidebar-primary: hsl(142, 76%, 36%);
     --sidebar-primary-hover: hsl(142, 76%, 15%);
     --sidebar-primary-selected: hsl(142, 76%, 36%);
+    --sidebar-text: hsl(0, 0%, 98%); /* Adicionado: Cor do texto geral da sidebar no dark mode */
     --sidebar-text-muted: hsl(215, 20%, 65%);
     --sidebar-text-selected: hsl(0, 0%, 100%);
     --sidebar-background: hsl(222, 84%, 5%);
@@ -120,6 +177,35 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 140 75% 44%; /* Foco em inputs */
+
+    /* Shades de Primary (Dark Mode) */
+    --primary-50: 140 75% 5%;
+    --primary-100: 140 75% 10%;
+    --primary-200: 140 75% 20%;
+    --primary-300: 140 75% 30%;
+    --primary-400: 140 75% 40%;
+    --primary-500: 140 75% 44%; /* Cor primária principal */
+    --primary-600: 140 75% 54%;
+    --primary-700: 140 75% 64%;
+    --primary-800: 140 75% 74%;
+    --primary-900: 140 75% 84%;
+
+    /* Cores Semânticas (Dark Mode) */
+    --success-50: 120 100% 5%;
+    --success-500: 120 100% 35%;
+    --success-600: 120 100% 45%;
+    
+    --warning-50: 40 100% 5%;
+    --warning-500: 40 100% 50%;
+    --warning-600: 40 100% 60%;
+    
+    --error-50: 0 100% 5%;
+    --error-500: 0 100% 50%;
+    --error-600: 0 100% 60%;
+    
+    --info-50: 220 100% 5%;
+    --info-500: 220 100% 50%;
+    --info-600: 220 100% 60%;
   }
 
   /* Estilos globais aplicados a elementos base */

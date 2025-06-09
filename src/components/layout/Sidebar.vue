@@ -7,13 +7,15 @@
       sidebarOpen ? 'translate-x-0' : '-translate-x-full',
       isCollapsed ? 'w-16' : 'w-64'
     ]"
+    role="navigation"
+    aria-label="Navegação principal"
   >
     <!-- Cabeçalho da Sidebar -->
-    <div class="flex h-16 items-center justify-center px-4 border-b border-l border-[var(--sidebar-border)]">
-      <div v-show="!isCollapsed" class="flex items-center justify-center w-full space-x-3 transition-opacity duration-200">
+    <div class="flex h-16 items-center justify-between px-4 border-b border-[var(--sidebar-border)]">
+            <div v-show="!isCollapsed" class="flex items-center justify-center w-full">
         <img src="@/assets/images/LogoExtend.png" alt="OnBoard Logo" class="h-10 w-auto mx-auto" />
       </div>
-      
+
       <div v-show="isCollapsed" class="flex items-center justify-center w-full">
         <img src="@/assets/images/LogoExtend.png" alt="OnBoard Logo" class="h-8 w-auto mx-auto" />
       </div>
@@ -24,38 +26,40 @@
         <button
           v-if="!isMobile"
           @click="toggleCollapse"
-          class="hidden lg:flex p-2 rounded-md text-[var(--sidebar-text-muted)] hover:bg-[var(--sidebar-item-hover)] hover:text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--sidebar-primary)] focus:ring-opacity-50"
+                      class="hidden lg:flex rounded-lg text-[var(--sidebar-text-muted)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 group"
+            style="padding: 0.5rem;"
           :aria-label="isCollapsed ? $t('layout.sidebar.expand') : $t('layout.sidebar.collapse')"
         >
           <Icon 
             :icon="isCollapsed ? 'mdi:chevron-right' : 'mdi:chevron-left'" 
-            class="h-4 w-4 transition-transform duration-200" 
+            class="h-4 w-4 transition-all duration-200 group-hover:scale-110" 
           />
         </button>
         
         <!-- Botão para fechar sidebar no mobile -->
         <button
           @click="toggleSidebar"
-          class="lg:hidden p-2 rounded-md text-[var(--sidebar-text-muted)] hover:bg-[var(--sidebar-item-hover)] hover:text-foreground transition-colors"
+                      class="lg:hidden rounded-lg text-[var(--sidebar-text-muted)] hover:bg-[var(--sidebar-item-hover)] hover:text-[var(--sidebar-text)] transition-all duration-200 group"
+            style="padding: 0.5rem;"
           :aria-label="$t('layout.sidebar.close')"
         >
-          <Icon icon="mdi:close" class="h-4 w-4" />
+          <Icon icon="mdi:close" class="h-4 w-4 group-hover:rotate-90 transition-transform duration-200" />
         </button>
       </div>
     </div>
 
     <!-- Navegação principal -->
-    <nav class="flex-1 px-3 py-6 space-y-6 overflow-y-auto scrollbar-thin">
+    <nav class="flex-1 px-3 py-6 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-transparent" role="menubar">
       <!-- Seção: Painel Principal -->
       <div class="space-y-2">
         <h3 
           v-show="!isCollapsed" 
-          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider transition-opacity duration-200"
+          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider"
         >
           {{ $t('layout.sidebar.sections.dashboard') }}
         </h3>
-        <ul class="space-y-1">
-          <li>
+        <ul class="space-y-1" role="none">
+          <li role="none">
             <router-link
               to="/dashboard"
               v-slot="{ isActive, href, navigate }"
@@ -66,6 +70,7 @@
                 class="sidebar-item group"
                 :class="{ 'sidebar-item-active': isActive }"
                 :title="isCollapsed ? $t('layout.sidebar.menu.dashboard') : ''"
+                role="menuitem"
               >
                 <Icon icon="mdi:view-dashboard" class="sidebar-icon" />
                 <span v-show="!isCollapsed" class="sidebar-text">
@@ -74,7 +79,7 @@
               </a>
             </router-link>
           </li>
-          <li>
+          <li role="none">
             <router-link
               to="/analytics"
               v-slot="{ isActive, href, navigate }"
@@ -85,6 +90,7 @@
                 class="sidebar-item group"
                 :class="{ 'sidebar-item-active': isActive }"
                 :title="isCollapsed ? $t('layout.sidebar.menu.analytics') : ''"
+                role="menuitem"
               >
                 <Icon icon="mdi:chart-line" class="sidebar-icon" />
                 <span v-show="!isCollapsed" class="sidebar-text">
@@ -100,18 +106,20 @@
       <div class="space-y-2">
         <h3 
           v-show="!isCollapsed" 
-          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider transition-opacity duration-200"
+          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider"
         >
           {{ $t('layout.sidebar.sections.monitoring') }}
         </h3>
-        <ul class="space-y-1">
+        <ul class="space-y-1" role="none">
           <!-- Menu dropdown para Telemetria -->
-          <li>
+          <li role="none">
             <button
               @click="!isCollapsed && toggleSubmenu('telemetry')"
               class="sidebar-item group w-full justify-between"
-              :class="{ 'cursor-default': isCollapsed }"
+              :class="{ 'cursor-default': isCollapsed, 'sidebar-submenu-open': submenuOpen.telemetry }"
               :title="isCollapsed ? $t('layout.sidebar.menu.telemetry.title') : ''"
+              role="menuitem"
+              :aria-expanded="submenuOpen.telemetry"
             >
               <div class="flex items-center">
                 <Icon icon="mdi:satellite-variant" class="sidebar-icon" />
@@ -122,19 +130,20 @@
               <Icon 
                 v-show="!isCollapsed"
                 icon="mdi:chevron-down" 
-                class="h-4 w-4 transition-transform duration-200 text-[var(--sidebar-text-muted)] group-hover:text-foreground"
-                :class="submenuOpen.telemetry ? 'rotate-180' : ''"
+                class="h-4 w-4 transition-all duration-300 text-[var(--sidebar-text-muted)] group-hover:text-[var(--sidebar-text)]"
+                :class="submenuOpen.telemetry ? 'rotate-180 text-primary' : ''"
               />
             </button>
             
             <!-- Submenu Telemetria -->
             <Transition name="slide-down">
-              <ul v-show="submenuOpen.telemetry && !isCollapsed" class="mt-1 ml-6 space-y-1">
-                <li>
+              <ul v-show="submenuOpen.telemetry && !isCollapsed" class="mt-2 ml-6 space-y-1 border-l-2 border-[var(--sidebar-border)] pl-4" role="menu">
+                <li role="none">
                   <a
                     href="#"
                     class="sidebar-submenu-item group"
                     :title="$t('layout.sidebar.menu.telemetry.realTime')"
+                    role="menuitem"
                   >
                     <Icon icon="mdi:clock-outline" class="sidebar-submenu-icon" />
                     <span class="sidebar-submenu-text">
@@ -142,11 +151,12 @@
                     </span>
                   </a>
                 </li>
-                <li>
+                <li role="none">
                   <a
                     href="#"
                     class="sidebar-submenu-item group"
                     :title="$t('layout.sidebar.menu.telemetry.history')"
+                    role="menuitem"
                   >
                     <Icon icon="mdi:history" class="sidebar-submenu-icon" />
                     <span class="sidebar-submenu-text">
@@ -159,19 +169,21 @@
           </li>
 
           <!-- Menu dropdown para Alertas -->
-          <li>
+          <li role="none">
             <button
               @click="!isCollapsed && toggleSubmenu('alerts')"
               class="sidebar-item group w-full justify-between"
-              :class="{ 'cursor-default': isCollapsed }"
+              :class="{ 'cursor-default': isCollapsed, 'sidebar-submenu-open': submenuOpen.alerts }"
               :title="isCollapsed ? $t('layout.sidebar.menu.alerts.title') : ''"
+              role="menuitem"
+              :aria-expanded="submenuOpen.alerts"
             >
               <div class="flex items-center">
                 <div class="relative">
                   <Icon icon="mdi:alert-circle" class="sidebar-icon" />
                   <span 
                     v-if="alertCount > 0" 
-                    class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full min-w-[18px] h-[18px]"
+                    class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-gradient-to-r from-error-500 to-error-600 rounded-full min-w-[18px] h-[18px] shadow-lg animate-bounce"
                   >
                     {{ alertCount > 9 ? '9+' : alertCount }}
                   </span>
@@ -181,7 +193,7 @@
                 </span>
                 <span 
                   v-if="alertCount > 0 && !isCollapsed" 
-                  class="ml-auto inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full"
+                  class="ml-auto inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gradient-to-r from-error-500 to-error-600 rounded-full shadow-md"
                 >
                   {{ alertCount }}
                 </span>
@@ -189,31 +201,36 @@
               <Icon 
                 v-show="!isCollapsed && alertCount === 0"
                 icon="mdi:chevron-down" 
-                class="h-4 w-4 transition-transform duration-200 text-[var(--sidebar-text-muted)] group-hover:text-foreground"
-                :class="submenuOpen.alerts ? 'rotate-180' : ''"
+                class="h-4 w-4 transition-all duration-300 text-[var(--sidebar-text-muted)] group-hover:text-[var(--sidebar-text)]"
+                :class="submenuOpen.alerts ? 'rotate-180 text-primary' : ''"
               />
             </button>
             
             <!-- Submenu Alertas -->
             <Transition name="slide-down">
-              <ul v-show="submenuOpen.alerts && !isCollapsed" class="mt-1 ml-6 space-y-1">
-                <li>
+              <ul v-show="submenuOpen.alerts && !isCollapsed" class="mt-2 ml-6 space-y-1 border-l-2 border-[var(--sidebar-border)] pl-4" role="menu">
+                <li role="none">
                   <a
                     href="#"
                     class="sidebar-submenu-item group"
                     :title="$t('layout.sidebar.menu.alerts.active')"
+                    role="menuitem"
                   >
-                    <Icon icon="mdi:bell-ring" class="sidebar-submenu-icon" />
+                    <Icon icon="mdi:bell-ring" class="sidebar-submenu-icon text-error-500" />
                     <span class="sidebar-submenu-text">
                       {{ $t('layout.sidebar.menu.alerts.active') }}
                     </span>
+                    <span v-if="alertCount > 0" class="ml-auto text-xs font-medium text-error-600">
+                      {{ alertCount }}
+                    </span>
                   </a>
                 </li>
-                <li>
+                <li role="none">
                   <a
                     href="#"
                     class="sidebar-submenu-item group"
                     :title="$t('layout.sidebar.menu.alerts.history')"
+                    role="menuitem"
                   >
                     <Icon icon="mdi:bell-outline" class="sidebar-submenu-icon" />
                     <span class="sidebar-submenu-text">
@@ -231,28 +248,30 @@
       <div class="space-y-2">
         <h3 
           v-show="!isCollapsed" 
-          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider transition-opacity duration-200"
+          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider"
         >
           {{ $t('layout.sidebar.sections.settings') }}
         </h3>
-        <ul class="space-y-1">
-          <li>
+        <ul class="space-y-1" role="none">
+          <li role="none">
             <a
               href="#"
               class="sidebar-item group"
               :title="isCollapsed ? $t('layout.sidebar.menu.settings') : ''"
+              role="menuitem"
             >
-              <Icon icon="mdi:cog" class="sidebar-icon" />
+              <Icon icon="mdi:cog" class="sidebar-icon group-hover:rotate-90 transition-transform duration-300" />
               <span v-show="!isCollapsed" class="sidebar-text">
                 {{ $t('layout.sidebar.menu.settings') }}
               </span>
             </a>
           </li>
-          <li>
+          <li role="none">
             <a
               href="#"
               class="sidebar-item group"
               :title="isCollapsed ? $t('layout.sidebar.menu.users') : ''"
+              role="menuitem"
             >
               <Icon icon="mdi:account-group" class="sidebar-icon" />
               <span v-show="!isCollapsed" class="sidebar-text">
@@ -267,12 +286,12 @@
       <div class="space-y-2">
         <h3 
           v-show="!isCollapsed" 
-          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider transition-opacity duration-200"
+          class="px-3 text-xs font-semibold text-[var(--sidebar-text-muted)] uppercase tracking-wider"
         >
           {{ $t('layout.sidebar.sections.showcase') }}
         </h3>
-        <ul class="space-y-1">
-          <li>
+        <ul class="space-y-1" role="none">
+          <li role="none">
             <router-link
               to="/showcase"
               v-slot="{ isActive, href, navigate }"
@@ -283,8 +302,9 @@
                 class="sidebar-item group"
                 :class="{ 'sidebar-item-active': isActive }"
                 :title="isCollapsed ? $t('layout.sidebar.menu.showcase') : ''"
+                role="menuitem"
               >
-                <Icon icon="mdi:palette" class="sidebar-icon" />
+                <Icon icon="mdi:palette" class="sidebar-icon group-hover:scale-110 transition-transform duration-200" />
                 <span v-show="!isCollapsed" class="sidebar-text">
                   {{ $t('layout.sidebar.menu.showcase') }}
                 </span>
@@ -294,13 +314,15 @@
         </ul>
       </div>
     </nav>
+
+    
   </aside>
 
   <!-- Overlay para mobile -->
   <div
     v-if="sidebarOpen && isMobile"
     @click="toggleSidebar"
-    class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+    class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity duration-300"
     aria-hidden="true"
   ></div>
 </template>
@@ -381,130 +403,132 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Classes reutilizáveis para itens da sidebar */
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  padding: 0.625rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease-in-out;
+/* Classes reutilizáveis para itens da sidebar usando variáveis CSS */
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 0.75rem;
   color: var(--sidebar-text-muted);
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
 }
 
+/* Estados de hover e focus */
 .sidebar-item:hover {
   background-color: var(--sidebar-item-hover);
-  color: hsl(var(--foreground));
+  color: var(--sidebar-text);
+  transform: translateX(2px);
 }
 
-.sidebar-item:focus {
+.sidebar-item:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--sidebar-primary);
+  background-color: var(--sidebar-item-hover);
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5);
 }
 
-.sidebar-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--sidebar-primary-hover);
-  transform: translateX(-100%);
-  transition: transform 0.2s ease-out;
-}
-
-.sidebar-item:hover::before {
-  transform: translateX(0);
-}
-
+/* Estado ativo com design moderno */
 .sidebar-item-active {
-  background-color: var(--sidebar-primary-selected);
-  color: var(--sidebar-text-selected);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-item-active::before {
-  display: none;
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+  border-left: 3px solid hsl(var(--primary));
+  padding-left: calc(0.75rem - 3px);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-item-active:hover {
-  background-color: var(--sidebar-primary-selected);
-  color: var(--sidebar-text-selected);
+  background-color: hsl(var(--primary) / 0.15);
+  color: hsl(var(--primary));
+  transform: translateX(2px);
 }
 
-.sidebar-icon {
-  margin-right: 0.75rem;
-  height: 1.25rem;
-  width: 1.25rem;
-  flex-shrink: 0;
-  transition: color 0.2s;
-  position: relative;
-  z-index: 1;
+.sidebar-item-active .sidebar-icon {
+  color: hsl(var(--primary));
 }
 
-.sidebar-text {
-  transition: opacity 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  z-index: 1;
+  .sidebar-icon {
+    flex-shrink: 0;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 10;
+    margin-right: 0.75rem;
+    height: 1.25rem;
+    width: 1.25rem;
 }
 
-.sidebar-submenu-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
+  .sidebar-text {
+    transition: all 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    z-index: 10;
+    font-weight: 500;
+}
+
+  .sidebar-submenu-item {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
   color: var(--sidebar-text-muted);
-  text-decoration: none;
 }
 
 .sidebar-submenu-item:hover {
   background-color: var(--sidebar-item-hover);
-  color: hsl(var(--foreground));
+  color: var(--sidebar-text);
+  transform: translateX(2px);
 }
 
-.sidebar-submenu-item:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--sidebar-primary);
+  .sidebar-submenu-item:focus-visible {
+    outline: none;
+    background-color: var(--sidebar-item-hover);
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5);
+  }
+
+  .sidebar-submenu-icon {
+    flex-shrink: 0;
+    transition: all 0.25s;
+    margin-right: 0.75rem;
+    height: 1rem;
+    width: 1rem;
 }
 
-.sidebar-submenu-icon {
-  margin-right: 0.75rem;
-  height: 1rem;
-  width: 1rem;
-  flex-shrink: 0;
-  transition: color 0.2s;
+  .sidebar-submenu-text {
+    transition: all 0.25s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
 }
 
-.sidebar-submenu-text {
-  transition: color 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.sidebar-submenu-open {
+  background-color: var(--sidebar-item-hover);
+  color: var(--sidebar-text);
 }
 
-/* Transições para submenus */
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
+/* Transições melhoradas para submenus */
+  .slide-down-enter-active,
+  .slide-down-leave-active {
+    transition: all 0.4s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
 
 .slide-down-enter-from,
 .slide-down-leave-to {
   opacity: 0;
   max-height: 0;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 }
 
 .slide-down-enter-to,
@@ -514,36 +538,29 @@ onUnmounted(() => {
   transform: translateY(0);
 }
 
-/* Scrollbar personalizada */
-.scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: var(--sidebar-border);
-  border-radius: 2px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: var(--sidebar-text-muted);
-}
-
 /* Animações de microinteração */
 .sidebar-item:active {
-  transform: scale(0.95);
+  transform: translateX(2px) scale(0.98);
 }
 
 .sidebar-submenu-item:active {
-  transform: scale(0.95);
+  transform: translateX(2px) scale(0.98);
 }
 
-/* Estados de foco melhorados */
+/* Melhorias para responsividade */
+@media (max-width: 1023px) {
+  .sidebar-item:hover,
+  .sidebar-submenu-item:hover {
+    transform: none;
+  }
+}
+
+/* Estados de foco unificados */
 .sidebar-item:focus-visible,
 .sidebar-submenu-item:focus-visible {
-  box-shadow: 0 0 0 2px var(--sidebar-primary), 0 0 0 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  background-color: var(--sidebar-item-hover);
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5);
 }
-</style> 
+</style>
+

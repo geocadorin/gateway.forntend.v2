@@ -1,6 +1,6 @@
 <template>
   <!-- Topbar Component - Barra superior com controles do usuário -->
-  <header class="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-border bg-card/80 backdrop-blur-sm px-4 lg:px-6">
+  <header class="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-border bg-card/95 backdrop-blur-md px-4 lg:px-6 shadow-sm">
     <!-- Botão de menu mobile -->
     <button
       v-if="isMobile"
@@ -9,6 +9,7 @@
       :aria-label="$t('layout.topbar.toggleMenu')"
     >
       <Icon icon="mdi:menu" class="h-5 w-5" />
+      <span class="sr-only">{{ $t('layout.topbar.toggleMenu') }}</span>
     </button>
 
     <!-- Breadcrumb/Título da página -->
@@ -19,21 +20,21 @@
             <router-link
               v-if="item.href && index < breadcrumbs.length - 1"
               :to="item.href"
-              class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              class="text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105 px-2 py-1 rounded-md hover:bg-muted/50"
             >
               {{ item.label }}
             </router-link>
             <span
               v-else
-              class="text-sm font-medium"
-              :class="index === breadcrumbs.length - 1 ? 'text-foreground' : 'text-muted-foreground'"
+              class="text-sm font-semibold px-2 py-1 rounded-md"
+              :class="index === breadcrumbs.length - 1 ? 'text-foreground bg-primary/10' : 'text-muted-foreground'"
             >
               {{ item.label }}
             </span>
             <Icon
               v-if="index < breadcrumbs.length - 1"
               icon="mdi:chevron-right"
-              class="mx-2 h-4 w-4 text-muted-foreground"
+              class="mx-2 h-4 w-4 text-muted-foreground transition-transform duration-200"
             />
           </li>
         </ol>
@@ -41,27 +42,32 @@
     </div>
 
     <!-- Controles da direita -->
-    <div class="flex items-center gap-1">
+          <div class="flex items-center space-x-2">
       <!-- Seletor de idioma -->
       <div class="relative" @click.stop>
         <button
           @click="toggleLanguageDropdown"
           class="topbar-button"
-          :class="{ 'bg-muted text-foreground': languageDropdownOpen }"
+          :class="{ 'topbar-button-active': languageDropdownOpen }"
           :aria-label="$t('layout.topbar.language.toggle')"
           :aria-expanded="languageDropdownOpen"
         >
           <Icon icon="mdi:translate" class="h-4 w-4" />
+          <span class="hidden sm:inline-block ml-2 text-xs font-medium">
+            {{ currentLanguageFlag }}
+          </span>
         </button>
         
         <!-- Dropdown de idiomas -->
-        <div
-          v-show="languageDropdownOpen"
-          class="dropdown-menu"
-        >
+        <Transition name="dropdown">
+          <div
+            v-show="languageDropdownOpen"
+            class="dropdown-menu"
+          >
             <div class="p-1">
               <div class="px-3 py-2 border-b border-border mb-1">
-                <p class="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                <p class="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center space-x-2">
+                  <Icon icon="mdi:earth" class="h-3 w-3" />
                   {{ $t('layout.topbar.language.selectLanguage') }}
                 </p>
               </div>
@@ -72,8 +78,8 @@
                 class="dropdown-item"
                 :class="currentLanguage === lang.code ? 'dropdown-item-active' : ''"
               >
-                <span class="text-lg mr-2">{{ lang.flag }}</span>
-                <span class="flex-1 text-left">{{ lang.name }}</span>
+                <span class="text-lg mr-3">{{ lang.flag }}</span>
+                <span class="flex-1 text-left font-medium">{{ lang.name }}</span>
                 <Icon 
                   v-if="currentLanguage === lang.code" 
                   icon="mdi:check" 
@@ -81,7 +87,8 @@
                 />
               </button>
             </div>
-        </div>
+          </div>
+        </Transition>
       </div>
 
       <!-- Toggle de tema -->
@@ -91,8 +98,8 @@
         :aria-label="$t('layout.topbar.theme.toggle')"
       >
         <Transition name="theme-rotate" mode="out-in">
-          <Icon v-if="isDark" icon="mdi:weather-sunny" class="h-4 w-4" />
-          <Icon v-else icon="mdi:weather-night" class="h-4 w-4" />
+          <Icon v-if="isDark" icon="mdi:weather-sunny" class="h-4 w-4 text-warning-500" />
+          <Icon v-else icon="mdi:weather-night" class="h-4 w-4 text-info-600" />
         </Transition>
       </button>
 
@@ -101,14 +108,14 @@
         <button
           @click="toggleNotifications"
           class="topbar-button relative"
-          :class="{ 'bg-muted text-foreground': notificationsOpen }"
+          :class="{ 'topbar-button-active': notificationsOpen }"
           :aria-label="$t('layout.topbar.notifications.toggle')"
           :aria-expanded="notificationsOpen"
         >
           <Icon icon="mdi:bell" class="h-4 w-4" />
           <span
             v-if="unreadCount > 0"
-            class="absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white ring-2 ring-background"
+            class="absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-error-500 to-error-600 text-xs font-bold text-white ring-2 ring-background shadow-lg animate-pulse"
           >
             {{ unreadCount > 9 ? '9+' : unreadCount }}
           </span>
@@ -118,35 +125,36 @@
         <Transition name="dropdown">
           <div
             v-if="notificationsOpen"
-            class="dropdown-menu w-80"
+            class="dropdown-menu w-96"
             @click.stop
           >
             <!-- Header das notificações -->
-            <div class="p-4 border-b border-border">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-sm font-semibold text-foreground">
+            <div class="p-4 border-b border-border bg-gradient-to-r from-background to-muted/30">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-semibold text-foreground flex items-center space-x-2">
+                  <Icon icon="mdi:bell" class="h-5 w-5 text-primary" />
                   {{ $t('layout.topbar.notifications.title') }}
                 </h3>
                 <span 
                   v-if="unreadCount > 0"
-                  class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                  class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-error-50 to-error-100 text-error-600 shadow-sm"
                 >
                   {{ unreadCount }} {{ $t('layout.topbar.notifications.unread') }}
                 </span>
               </div>
               
               <!-- Ações das notificações -->
-              <div v-if="notifications.length > 0" class="flex items-center gap-2">
+              <div v-if="notifications.length > 0" class="flex items-center gap-3">
                 <button
                   v-if="unreadCount > 0"
                   @click="markAllAsRead"
-                  class="text-xs text-primary hover:text-primary/80 font-medium transition-colors"
+                  class="text-xs text-primary hover:text-primary/80 font-semibold transition-all duration-200 hover:scale-105 px-2 py-1 rounded-md hover:bg-primary/10"
                 >
                   {{ $t('layout.topbar.notifications.markAllRead') }}
                 </button>
                 <button
                   @click="clearAllNotifications"
-                  class="text-xs text-muted-foreground hover:text-destructive font-medium transition-colors"
+                  class="text-xs text-muted-foreground hover:text-destructive font-semibold transition-all duration-200 hover:scale-105 px-2 py-1 rounded-md hover:bg-destructive/10"
                 >
                   {{ $t('layout.topbar.notifications.clearAll') }}
                 </button>
@@ -154,36 +162,36 @@
             </div>
             
             <!-- Lista de notificações -->
-            <div class="max-h-64 overflow-y-auto">
+            <div class="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-transparent">
               <div
                 v-for="notification in notifications"
                 :key="notification.id"
-                class="flex gap-3 p-3 hover:bg-muted/50 transition-colors border-b border-border last:border-b-0"
-                :class="!notification.read ? 'bg-primary/5' : ''"
+                class="notification-item"
+                :class="!notification.read ? 'notification-unread' : ''"
               >
                 <div class="flex-shrink-0 mt-1">
                   <div 
-                    class="w-8 h-8 rounded-full flex items-center justify-center"
+                    class="w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-transform duration-200 hover:scale-110"
                     :class="getNotificationBgColor(notification.type)"
                   >
                     <Icon
                       :icon="getNotificationIcon(notification.type)"
-                      class="h-4 w-4"
+                      class="h-5 w-5"
                       :class="getNotificationIconColor(notification.type)"
                     />
                   </div>
                 </div>
                 
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-start justify-between space-x-2">
                     <div class="flex-1">
-                      <p class="text-sm font-medium text-foreground leading-tight">
+                      <p class="text-sm font-semibold text-foreground leading-tight mb-1">
                         {{ notification.title }}
                       </p>
-                      <p class="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      <p class="text-sm text-muted-foreground leading-relaxed mb-2">
                         {{ notification.message }}
                       </p>
-                      <p class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                      <p class="text-xs text-muted-foreground flex items-center gap-1">
                         <Icon icon="mdi:clock-outline" class="h-3 w-3" />
                         {{ formatNotificationTime(notification.timestamp) }}
                       </p>
@@ -194,14 +202,14 @@
                       <button
                         v-if="!notification.read"
                         @click="markAsRead(notification.id)"
-                        class="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                        class="notification-action-btn notification-action-primary"
                         :title="$t('layout.topbar.notifications.markAsRead')"
                       >
                         <Icon icon="mdi:check" class="h-3 w-3" />
                       </button>
                       <button
                         @click="deleteNotification(notification.id)"
-                        class="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                        class="notification-action-btn notification-action-danger"
                         :title="$t('layout.topbar.notifications.delete')"
                       >
                         <Icon icon="mdi:close" class="h-3 w-3" />
@@ -212,17 +220,22 @@
               </div>
               
               <!-- Estado vazio -->
-              <div v-if="notifications.length === 0" class="text-center py-8">
-                <Icon icon="mdi:bell-outline" class="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <p class="text-sm text-muted-foreground">
+              <div v-if="notifications.length === 0" class="text-center py-12">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                  <Icon icon="mdi:bell-outline" class="h-8 w-8 text-muted-foreground" />
+                </div>
+                <p class="text-sm text-muted-foreground font-medium">
                   {{ $t('layout.topbar.notifications.empty') }}
+                </p>
+                <p class="text-xs text-muted-foreground mt-1">
+                  Você está em dia com suas notificações!
                 </p>
               </div>
             </div>
             
             <!-- Footer das notificações -->
-            <div v-if="notifications.length > 0" class="p-3 border-t border-border">
-              <button class="w-full text-sm text-primary hover:text-primary/80 font-medium transition-colors">
+            <div v-if="notifications.length > 0" class="p-3 border-t border-border bg-muted/30">
+              <button class="w-full text-sm text-primary hover:text-primary/80 font-semibold transition-all duration-200 hover:scale-105 py-2 rounded-md hover:bg-primary/10">
                 {{ $t('layout.topbar.notifications.viewAll') }}
               </button>
             </div>
@@ -235,20 +248,20 @@
         <button
           @click="toggleUserMenu"
           class="topbar-button-user"
-          :class="{ 'bg-muted': userMenuOpen }"
+          :class="{ 'topbar-button-active': userMenuOpen }"
           :aria-label="$t('layout.topbar.user.menu')"
           :aria-expanded="userMenuOpen"
         >
-          <div class="h-7 w-7 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-            <Icon icon="mdi:account" class="h-4 w-4 text-primary" />
+          <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary-600 border-2 border-primary/20 flex items-center justify-center shadow-md transition-transform duration-200 hover:scale-110">
+            <Icon icon="mdi:account" class="h-4 w-4 text-white" />
           </div>
-          <span class="hidden md:block text-sm font-medium text-foreground max-w-32 truncate">
+          <span class="hidden md:block text-sm font-semibold text-foreground max-w-32 truncate">
             {{ userDisplayName }}
           </span>
           <Icon 
             icon="mdi:chevron-down" 
-            class="h-3 w-3 text-muted-foreground transition-transform duration-200"
-            :class="userMenuOpen ? 'rotate-180' : ''"
+            class="h-3 w-3 text-muted-foreground transition-all duration-200"
+            :class="userMenuOpen ? 'rotate-180 text-primary' : ''"
           />
         </button>
 
@@ -256,46 +269,53 @@
         <Transition name="dropdown">
           <div
             v-if="userMenuOpen"
-            class="dropdown-menu w-64"
+            class="dropdown-menu w-72"
             @click.stop
           >
             <!-- Informações do usuário -->
-            <div class="p-4 border-b border-border">
+            <div class="p-4 border-b border-border bg-gradient-to-r from-background to-muted/30">
               <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                  <Icon icon="mdi:account" class="h-5 w-5 text-primary" />
+                <div class="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary-600 border-2 border-primary/20 flex items-center justify-center shadow-lg">
+                  <Icon icon="mdi:account" class="h-6 w-6 text-white" />
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium text-foreground truncate">{{ userDisplayName }}</p>
+                  <p class="text-sm font-semibold text-foreground truncate">{{ userDisplayName }}</p>
                   <p class="text-xs text-muted-foreground truncate">{{ userEmail }}</p>
+                  <div class="flex items-center gap-1 mt-1">
+                    <div class="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs text-success-600 font-medium">Online</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Opções do menu -->
-            <div class="p-2">
+                            <div style="padding: 0.5rem;">
               <button
                 @click="goToProfile"
                 class="dropdown-item"
               >
-                <Icon icon="mdi:account-circle" class="h-4 w-4" />
+                <Icon icon="mdi:account-circle" class="h-4 w-4 text-info-500" />
                 <span>{{ $t('layout.topbar.user.profile') }}</span>
+                <Icon icon="mdi:chevron-right" class="h-3 w-3 ml-auto text-muted-foreground" />
               </button>
 
               <button
                 @click="openChangePasswordModal"
                 class="dropdown-item"
               >
-                <Icon icon="mdi:lock-reset" class="h-4 w-4" />
+                <Icon icon="mdi:lock-reset" class="h-4 w-4 text-warning-500" />
                 <span>{{ $t('layout.topbar.user.changePassword') }}</span>
+                <Icon icon="mdi:chevron-right" class="h-3 w-3 ml-auto text-muted-foreground" />
               </button>
 
               <button
                 @click="goToSettings"
                 class="dropdown-item"
               >
-                <Icon icon="mdi:cog" class="h-4 w-4" />
+                <Icon icon="mdi:cog" class="h-4 w-4 text-muted-foreground" />
                 <span>{{ $t('layout.topbar.user.settings') }}</span>
+                <Icon icon="mdi:chevron-right" class="h-3 w-3 ml-auto text-muted-foreground" />
               </button>
 
               <div class="border-t border-border my-2"></div>
@@ -375,6 +395,10 @@ onUnmounted(() => {
 // Computed
 const isDark = computed(() => themeStore.isDark);
 const currentLanguage = computed(() => locale.value);
+const currentLanguageFlag = computed(() => {
+  const lang = availableLanguages.find(l => l.code === locale.value);
+  return lang?.flag || '🌐';
+});
 const userDisplayName = computed(() => authStore.user?.name || 'Usuário');
 const userEmail = computed(() => authStore.user?.email || 'user@example.com');
 
@@ -385,7 +409,7 @@ const availableLanguages = [
   { code: 'es', name: 'Español', flag: '🇪🇸' }
 ];
 
-// Mock de notificações
+// Mock de notificações melhorado
 const notifications = ref([
   {
     id: 1,
@@ -417,26 +441,24 @@ const notifications = ref([
     title: 'Bateria baixa',
     message: 'Dispositivo SAT-003 com nível de bateria em 15%',
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    read: false
+    read: true
   }
 ]);
 
+// Computed para contadores
 const unreadCount = computed(() => notifications.value.filter(n => !n.read).length);
 
-// Breadcrumbs baseado na rota atual
+// Breadcrumbs melhorado
 const breadcrumbs = computed(() => {
   const pathSegments = route.path.split('/').filter(Boolean);
-  const crumbs = [{ label: t('layout.breadcrumb.home'), href: '/dashboard' }];
+  const crumbs = [
+    { label: t('layout.breadcrumb.home'), href: '/' }
+  ];
   
-  let currentPath = '';
   pathSegments.forEach((segment, index) => {
-    currentPath += `/${segment}`;
-    const isLast = index === pathSegments.length - 1;
-    
-    crumbs.push({
-      label: t(`layout.breadcrumb.${segment}`, segment),
-      href: isLast ? currentPath : currentPath
-    });
+    const href = '/' + pathSegments.slice(0, index + 1).join('/');
+    const label = t(`layout.breadcrumb.${segment}`, segment);
+    crumbs.push({ label, href: index === pathSegments.length - 1 ? '' : href });
   });
   
   return crumbs;
@@ -463,60 +485,13 @@ function toggleUserMenu() {
 
 function changeLanguage(langCode: string) {
   locale.value = langCode;
-  localStorage.setItem('user-locale', langCode);
   languageDropdownOpen.value = false;
   toast.success(t('layout.topbar.language.changed'));
 }
 
 function toggleTheme() {
   themeStore.toggleTheme();
-  const message = isDark.value ? t('layout.topbar.theme.darkEnabled') : t('layout.topbar.theme.lightEnabled');
-  toast.info(message);
-}
-
-function getNotificationIcon(type: string) {
-  const icons = {
-    alert: 'mdi:alert-circle',
-    info: 'mdi:information',
-    success: 'mdi:check-circle',
-    warning: 'mdi:alert'
-  } as const;
-  return icons[type as keyof typeof icons] || 'mdi:bell';
-}
-
-function getNotificationBgColor(type: string) {
-  const colors = {
-    alert: 'bg-red-100 dark:bg-red-900/30',
-    info: 'bg-blue-100 dark:bg-blue-900/30',
-    success: 'bg-green-100 dark:bg-green-900/30',
-    warning: 'bg-yellow-100 dark:bg-yellow-900/30'
-  } as const;
-  return colors[type as keyof typeof colors] || 'bg-gray-100 dark:bg-gray-900/30';
-}
-
-function getNotificationIconColor(type: string) {
-  const colors = {
-    alert: 'text-red-600 dark:text-red-400',
-    info: 'text-blue-600 dark:text-blue-400',
-    success: 'text-green-600 dark:text-green-400',
-    warning: 'text-yellow-600 dark:text-yellow-400'
-  };
-  return colors[type as keyof typeof colors] || 'text-gray-600 dark:text-gray-400';
-}
-
-function formatNotificationTime(timestamp: Date) {
-  const now = new Date();
-  const diff = now.getTime() - timestamp.getTime();
-  const minutes = Math.floor(diff / (1000 * 60));
-  
-  if (minutes < 1) return t('layout.topbar.notifications.time.now');
-  if (minutes < 60) return t('layout.topbar.notifications.time.minutes', { count: minutes });
-  
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return t('layout.topbar.notifications.time.hours', { count: hours });
-  
-  const days = Math.floor(hours / 24);
-  return t('layout.topbar.notifications.time.days', { count: days });
+  toast.success(t('layout.topbar.theme.changed'));
 }
 
 function markAsRead(notificationId: number) {
@@ -528,25 +503,64 @@ function markAsRead(notificationId: number) {
 }
 
 function markAllAsRead() {
-  const unreadNotifications = notifications.value.filter(n => !n.read);
-  unreadNotifications.forEach(n => n.read = true);
-  toast.success(t('layout.topbar.notifications.allMarkedAsRead', { count: unreadNotifications.length }));
+  notifications.value.forEach(n => n.read = true);
+  toast.success(t('layout.topbar.notifications.allMarkedAsRead'));
 }
 
 function deleteNotification(notificationId: number) {
   const index = notifications.value.findIndex(n => n.id === notificationId);
-  if (index !== -1) {
+  if (index > -1) {
     notifications.value.splice(index, 1);
     toast.success(t('layout.topbar.notifications.deleted'));
   }
 }
 
 function clearAllNotifications() {
-  if (notifications.value.length > 0) {
-    const count = notifications.value.length;
-    notifications.value.splice(0);
-    toast.success(t('layout.topbar.notifications.allCleared', { count }));
-  }
+  notifications.value.splice(0);
+  toast.success(t('layout.topbar.notifications.allCleared'));
+}
+
+function getNotificationIcon(type: string) {
+  const icons = {
+    alert: 'mdi:alert-circle',
+    warning: 'mdi:alert',
+    success: 'mdi:check-circle',
+    info: 'mdi:information'
+  } as Record<string, string>;
+  return icons[type] || 'mdi:bell';
+}
+
+function getNotificationBgColor(type: string) {
+  const colors = {
+    alert: 'bg-error-50',
+    warning: 'bg-warning-50',
+    success: 'bg-success-50',
+    info: 'bg-info-50'
+  } as Record<string, string>;
+  return colors[type] || 'bg-muted';
+}
+
+function getNotificationIconColor(type: string) {
+  const colors = {
+    alert: 'text-error-600',
+    warning: 'text-warning-600',
+    success: 'text-success-600',
+    info: 'text-info-600'
+  } as Record<string, string>;
+  return colors[type] || 'text-muted-foreground';
+}
+
+function formatNotificationTime(timestamp: Date) {
+  const now = new Date();
+  const diff = now.getTime() - timestamp.getTime();
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  
+  if (minutes < 1) return 'Agora';
+  if (minutes < 60) return `${minutes}m atrás`;
+  if (hours < 24) return `${hours}h atrás`;
+  return `${days}d atrás`;
 }
 
 function goToProfile() {
@@ -560,147 +574,327 @@ function goToSettings() {
 }
 
 function openChangePasswordModal() {
+  // Implementar modal de mudança de senha
   userMenuOpen.value = false;
-  // Aqui você implementaria a abertura do modal de mudança de senha
-  toast.info(t('layout.topbar.user.changePasswordModal'));
+  toast.info('Modal de mudança de senha será implementado');
 }
 
 function confirmLogout() {
-  userMenuOpen.value = false;
-  // Confirmar logout com toast
   if (confirm(t('layout.topbar.user.confirmLogout'))) {
     authStore.logout();
     router.push('/login');
     toast.success(t('layout.topbar.user.loggedOut'));
   }
+  userMenuOpen.value = false;
 }
 </script>
 
 <style scoped>
-/* Botões da topbar */
-.topbar-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.25rem;
-  width: 2.25rem;
+/* Botões da topbar usando variáveis CSS e classes Tailwind */
+  .topbar-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background: transparent;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.topbar-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--muted), var(--accent));
+  transform: scale(0);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0.5rem;
-  border: 1px solid transparent;
-  color: var(--sidebar-text-muted);
-  background-color: transparent;
-  transition: all 0.2s ease-in-out;
-  position: relative;
+  z-index: 0;
+}
+
+.topbar-button:hover::before {
+  transform: scale(1);
 }
 
 .topbar-button:hover {
-  background-color: var(--sidebar-item-hover);
-  color: hsl(var(--foreground));
+  color: var(--foreground);
+  border-color: var(--border);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.topbar-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--sidebar-primary);
+  .topbar-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #64748b, 0 0 0 4px rgba(100, 116, 139, 0.2);
+  }
+
+.topbar-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.topbar-button-active {
+  background-color: var(--muted);
+  border-color: var(--border);
+  color: var(--foreground);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .topbar-button-user {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid transparent;
-  background-color: transparent;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    gap: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
+}
+
+.topbar-button-user::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--muted), var(--accent));
+  transform: scale(0);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0.75rem;
+  z-index: 0;
+}
+
+.topbar-button-user:hover::before {
+  transform: scale(1);
 }
 
 .topbar-button-user:hover {
-  background-color: var(--sidebar-item-hover);
+  border-color: var(--border);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.topbar-button-user:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--sidebar-primary);
+.topbar-button-user > * {
+  position: relative;
+  z-index: 1;
 }
 
-/* Dropdown menu */
+/* Dropdowns usando variáveis CSS e classes Tailwind */
 .dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 0.5rem);
-  min-width: 12rem;
-  border-radius: 0.75rem;
-  border: 1px solid hsl(var(--border));
-  background-color: hsl(var(--popover));
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  z-index: 9999;
-  pointer-events: auto;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border: 1px solid var(--border);
+    margin-top: 0.5rem;
+    backdrop-filter: blur(12px);
+    min-width: 12rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+  z-index: 1000;
+  background-color: hsl(var(--card) / 0.95);
+  border-color: var(--border);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  border: none;
-  background: transparent;
-  color: hsl(var(--foreground));
-  text-align: left;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+  color: var(--foreground);
+  margin: 0.125rem;
+}
+
+.dropdown-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--muted), var(--accent));
+  transform: translateX(-100%);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.dropdown-item:hover::before {
+  transform: translateX(0);
 }
 
 .dropdown-item:hover {
-  background-color: var(--sidebar-item-hover);
+  transform: translateX(4px);
+}
+
+.dropdown-item > * {
+  position: relative;
+  z-index: 1;
 }
 
 .dropdown-item-active {
-  background-color: var(--sidebar-primary-hover);
-  color: var(--sidebar-primary);
+  border-color: hsl(var(--primary) / 0.2);
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.05));
+  color: var(--primary);
 }
 
-/* Transições */
+/* Notificações usando variáveis CSS e classes Tailwind */
+.notification-item {
+    display: flex;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.notification-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, hsl(var(--muted) / 0.5), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.notification-item:hover::before {
+  transform: translateX(0);
+}
+
+.notification-item:hover {
+  transform: translateX(4px);
+}
+
+.notification-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-unread {
+  border-left: 4px solid hsl(var(--primary));
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--primary) / 0.02));
+}
+
+.notification-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.75rem;
+    border-radius: 0.375rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.notification-action-primary {
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+}
+
+.notification-action-primary:hover {
+  background-color: hsl(var(--primary) / 0.2);
+  transform: scale(1.1);
+}
+
+.notification-action-danger {
+  background-color: hsl(var(--destructive) / 0.1);
+  color: hsl(var(--destructive));
+}
+
+.notification-action-danger:hover {
+  background-color: hsl(var(--destructive) / 0.2);
+  transform: scale(1.1);
+}
+
+/* Transições melhoradas */
 .dropdown-enter-active,
 .dropdown-leave-active {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dropdown-enter-from,
 .dropdown-leave-to {
   opacity: 0;
-  transform: scale(0.95) translateY(-10px);
+  transform: translateY(-8px) scale(0.95);
+}
+
+.dropdown-enter-to,
+.dropdown-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .theme-rotate-enter-active,
 .theme-rotate-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.theme-rotate-enter-from,
+.theme-rotate-enter-from {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+}
+
 .theme-rotate-leave-to {
   opacity: 0;
-  transform: rotate(180deg) scale(0.8);
+  transform: rotate(180deg) scale(0.5);
 }
 
-/* Scrollbar personalizada para notificações */
-.max-h-64::-webkit-scrollbar {
-  width: 4px;
+/* Responsividade */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    left: 0;
+    right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .dropdown-menu.w-96 {
+    width: auto;
+  }
+  
+  .dropdown-menu.w-72 {
+    width: auto;
+  }
 }
+</style>
 
-.max-h-64::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.max-h-64::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 2px;
-}
-
-.max-h-64::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
-}
-</style> 
